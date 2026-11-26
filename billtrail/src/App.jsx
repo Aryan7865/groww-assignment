@@ -320,7 +320,7 @@ function Bills({ billId, setBillId }) {
       </header>
 
       <div className="flex gap-1.5 overflow-x-auto no-scrollbar -mx-1 px-1">
-        {[["all","All"],["verified","Figures confirmed"],["needs-review","Needs checking"],["incomplete","Missing record"]].map(([f,label]) => (
+        {[["all","All"],["verified","Confirmed"],["needs-review","Needs check"],["incomplete","Missing"]].map(([f,label]) => (
           <button key={f} onClick={()=>setFilter(f)}
             className={`chip shrink-0 px-3 py-1.5 transition active:scale-95 ${filter===f ? "bg-sage-900 text-lime-400" : "bg-white text-ink border border-black/5"}`}>
             {label}
@@ -356,14 +356,18 @@ function Bills({ billId, setBillId }) {
   );
 }
 
-function StatusPill({ s }) {
+function StatusPill({ s, full = false }) {
   const map = {
-    "verified":     ["bg-sage-100 text-sage-900", "Figures confirmed"],
-    "needs-review": ["bg-warn-50 text-warn-600", "Needs checking"],
-    "incomplete":   ["bg-black/5 text-muted", "Missing record"],
+    "verified":     ["bg-sage-100 text-sage-900", full ? "Figures confirmed" : "Confirmed",   "●"],
+    "needs-review": ["bg-warn-50 text-warn-600",   full ? "Needs checking"   : "Check",      "●"],
+    "incomplete":   ["bg-black/5 text-muted",      full ? "Missing record"   : "Missing",    "○"],
   };
-  const [cls, label] = map[s] || ["bg-black/5 text-muted", s];
-  return <span className={`chip mt-1 ${cls}`}>{label}</span>;
+  const [cls, label, dot] = map[s] || ["bg-black/5 text-muted", s, "○"];
+  return (
+    <span className={`chip mt-1 whitespace-nowrap ${cls}`}>
+      <span className="text-[8px] leading-none">{dot}</span>{label}
+    </span>
+  );
 }
 
 function StatusHelper({ status }) {
@@ -388,7 +392,7 @@ function BillDetail({ bill, onBack }) {
       <section className="card-tinted p-5">
         <div className="text-[12px] text-muted">Billing period</div>
         <h2 className="h-display text-[30px] leading-tight mt-0.5">{bill.period}</h2>
-        <StatusPill s={bill.status} />
+        <StatusPill s={bill.status} full />
         <StatusHelper status={bill.status} />
 
         <div className="mt-4 grid grid-cols-2 gap-3">
