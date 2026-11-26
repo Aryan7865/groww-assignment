@@ -123,3 +123,21 @@ body {
 
 /* Headlines */
 .h-display { font-family: 'Instrument Serif', 'Inter', serif; font-weight: 400; letter-spacing: -0.02em; }
+
+/* eyebrow label used above headings */
+.eyebrow { @apply text-[10px] uppercase tracking-[0.14em] text-muted font-semibold; }
+
+/* dark hero gradient accent */
+.hero-dark {
+  background:
+    radial-gradient(1200px 300px at 90% -10%, rgba(197,242,106,0.22), transparent 60%),
+    radial-gradient(400px 200px at -10% 110%, rgba(197,242,106,0.14), transparent 60%),
+    linear-gradient(180deg, #1F3B29 0%, #162A1E 100%);
+}
+
+/* tiny divider dot */
+.dot-sep::before { content: "·"; margin: 0 .35rem; color: rgba(14,21,17,0.35); }
+
+/* shimmer for skeleton or chart bars entering */
+@keyframes grow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+.bar-grow { transform-origin: bottom; animation: grow 520ms cubic-bezier(.2,.9,.3,1) both; }

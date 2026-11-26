@@ -143,8 +143,8 @@ function Home({ onOpenBill, onOpenExport, onOpenCase, onOpenAnalyse }) {
       {/* Greeting */}
       <section className="flex items-center justify-between">
         <div>
-          <div className="text-[13px] text-muted">Good morning</div>
-          <h1 className="h-display text-[28px] text-ink leading-tight">Hello, Priya</h1>
+          <div className="eyebrow">Good morning</div>
+          <h1 className="h-display text-[30px] text-ink leading-tight mt-1">Hello, Priya</h1>
         </div>
         <div className="w-12 h-12 rounded-full overflow-hidden ring-1 ring-black/5 shadow-cardsm">
           <img src="/assets/priya.jpg" alt="" className="w-full h-full object-cover" />
@@ -152,29 +152,38 @@ function Home({ onOpenBill, onOpenExport, onOpenCase, onOpenAnalyse }) {
       </section>
 
       {/* Hero case card (dark) */}
-      <section className="card-dark p-5 relative overflow-hidden">
+      <section className="hero-dark text-white rounded-[28px] p-5 relative overflow-hidden">
         <div className="relative z-10">
-          <div className="flex items-center gap-2 text-[11px] text-lime-400/90 font-medium">
-            <span className="w-1.5 h-1.5 rounded-full bg-lime-400 animate-pulse" />
-            Case status · Open
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 text-[11px] text-lime-400 font-medium">
+              <span className="relative flex w-1.5 h-1.5">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-lime-400 opacity-60 animate-ping"/>
+                <span className="relative inline-flex w-1.5 h-1.5 rounded-full bg-lime-400"/>
+              </span>
+              Case status · Open
+            </div>
+            <div className="text-[10px] uppercase tracking-[0.14em] text-white/50">Aug 25 to Aug 26</div>
           </div>
-          <div className="mt-3 text-[13px] text-white/70">Outstanding balance on latest bill</div>
+
+          <div className="mt-4 text-[12px] text-white/60">Outstanding balance on latest bill</div>
           <div className="mt-1 flex items-end gap-2">
-            <div className="text-[40px] font-semibold leading-none tracking-tighter2">₹{latest.payable.toLocaleString("en-IN")}</div>
+            <div className="text-[44px] font-semibold leading-none tracking-tighter2">₹{latest.payable.toLocaleString("en-IN")}</div>
           </div>
-          <div className="mt-2 text-[12px] text-white/60">{latest.period} · includes amounts carried from earlier bills</div>
+          <div className="mt-2 text-[11px] text-white/55 max-w-[220px] leading-snug">
+            Includes ₹{Math.max(latest.payable - latest.current, 0).toLocaleString("en-IN")} carried from earlier bills
+          </div>
 
           <div className="mt-5 grid grid-cols-2 gap-2">
             <button onClick={onOpenCase} className="btn-lime !py-2.5 !rounded-full text-[13px]">
               Continue my case
             </button>
-            <button onClick={onOpenExport} className="btn !py-2.5 !rounded-full text-[13px] bg-white/10 text-white hover:bg-white/15">
+            <button onClick={onOpenExport} className="btn !py-2.5 !rounded-full text-[13px] bg-white/10 text-white hover:bg-white/20 border border-white/10">
               <Icon name="download" className="w-4 h-4 invert brightness-0" /> Export
             </button>
           </div>
         </div>
         <img src="/assets/hero.png" alt=""
-             className="absolute -right-6 -bottom-6 w-44 h-44 img-contain opacity-95 pointer-events-none select-none" />
+             className="absolute -right-8 -bottom-8 w-44 h-44 img-contain opacity-90 pointer-events-none select-none" />
       </section>
 
       <section className="grid grid-cols-2 gap-3">
@@ -306,8 +315,8 @@ function Bills({ billId, setBillId }) {
   return (
     <div className="space-y-4">
       <header>
-        <div className="text-[13px] text-muted">13 months on file</div>
-        <h1 className="h-display text-[28px] leading-tight">Bills</h1>
+        <div className="eyebrow">13 months · Aug 25 to Aug 26</div>
+        <h1 className="h-display text-[30px] leading-tight mt-1">Bills</h1>
       </header>
 
       <div className="flex gap-1.5 overflow-x-auto no-scrollbar -mx-1 px-1">
@@ -515,8 +524,8 @@ function Analyse() {
   return (
     <div className="space-y-4">
       <header>
-        <div className="text-[13px] text-muted">Patterns across months</div>
-        <h1 className="h-display text-[28px] leading-tight">Analyse</h1>
+        <div className="eyebrow">Patterns across months</div>
+        <h1 className="h-display text-[30px] leading-tight mt-1">Analyse</h1>
       </header>
 
       <div className="flex gap-1.5 overflow-x-auto no-scrollbar -mx-1 px-1">
@@ -552,8 +561,8 @@ function Analyse() {
             const isLast = i === series.length-1;
             return (
               <div key={i} className="flex-1 flex flex-col justify-end items-center group">
-                <div className={`w-full rounded-t-lg relative transition-all duration-500 ease-out ${isLast ? "bg-lime-400" : "bg-sage-900 group-hover:bg-sage-700"}`}
-                     style={{height: `${Math.max(h, 3)}%`}}>
+                <div className={`w-full rounded-t-lg relative bar-grow transition-colors duration-300 ${isLast ? "bg-lime-400" : "bg-sage-900 group-hover:bg-sage-700"}`}
+                     style={{height: `${Math.max(h, 3)}%`, animationDelay: `${i*18}ms`}}>
                   {isLast && (
                     <div className="absolute -top-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] font-semibold text-sage-900 bg-lime-400 px-1.5 py-0.5 rounded">
                       {unit==="₹" ? `₹${Math.round(s.value/1000)}k` : `${s.value}${unit.trim()}`}
@@ -719,8 +728,8 @@ function MyCase({ onOpenExport }) {
     <div className="space-y-4">
       <header className="flex items-start justify-between gap-3">
         <div className="flex-1 min-w-0">
-          <div className="text-[13px] text-muted">{openQuestions.length} open questions</div>
-          <h1 className="h-display text-[28px] leading-tight">My case</h1>
+          <div className="eyebrow">{openQuestions.length} open questions</div>
+          <h1 className="h-display text-[30px] leading-tight mt-1">My case</h1>
         </div>
         <img src="/assets/resolved.png" alt="" className="w-16 h-16 img-contain opacity-90" />
       </header>

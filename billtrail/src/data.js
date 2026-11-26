@@ -113,8 +113,8 @@ export const observations = [
     affects: ["Sep 2025"],
     detection: "Rule payment-conflict. For the Sep 2025 bill the household ledger shows ₹8,710 as the payment made on 28 Oct 2025, while the official bill history for the same date shows ₹4,310. The ₹4,400 gap numerically matches the deposit adjustment that appears later on the Oct 2025 bill.",
     evidence: [
-      { period: "28 Oct 2025", label: "Household ledger entry", value: "₹8,710 (Net-bank · ref NB-28102025)", source: "ledger" },
-      { period: "28 Oct 2025", label: "Bill history entry", value: "₹4,310 (UPI · ref UPI-2025102801)", source: "bill-history" },
+      { period: "28 Oct 2025", label: "Household ledger entry", value: "₹8,710 (Net-banking payment)", source: "household ledger" },
+      { period: "28 Oct 2025", label: "Utility bill-history entry", value: "₹4,310 (UPI payment)", source: "bill-history" },
       { period: "Oct 2025", label: "Deposit adjustment on next bill", value: "minus ₹4,400", source: "OCT25.pdf · printed on bill", pdf: "/bills/OCT25.pdf" },
       { period: "Observation", label: "Numeric match", value: "₹8,710 − ₹4,310 = ₹4,400 (same as deposit adjustment)", source: "calculated by BillTrail" },
     ],
